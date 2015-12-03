@@ -122,6 +122,50 @@
 					</div>
 				</a>
 			</li>
+			<!--usuarios-->
+			<li class="submenu 
+				{{Route::currentRouteName() == ('crearCuenta') ?   'active open' : '' }} 
+				 {{Route::currentRouteName() == ('listaUsuarios') ?   'active open' : '' }}
+				 {{Route::currentRouteName() == ('permisosCuenta') ?   'active open' : '' }}
+				 {{Route::currentRouteName() == ('crearRol') ?   'active' : '' }}">
+				<a href="javascript:void(0)" >
+				 <div class="item-content">
+        			<div class="item-media">
+						<i class="ti-user"></i>
+					</div>
+					<div class="item-inner">
+							<span class="title"> Usuarios </span><i class="icon-arrow"></i>
+ 					</div>
+        		</div>
+				</a>
+			<ul class="sub-menu">			
+					<li class="{{Route::currentRouteName() == ('crearCuenta') ? 'active' : '' }}">
+						<a  href="{{URL::route('crearCuenta')}}">
+							<i class="glyphicon glyphicon-plus"></i> <span>Alta</span>
+						</a>
+					</li>
+					
+					
+					<li class="{{Route::currentRouteName() == ('listaUsuarios') ? 'active ' : '' }}">
+						<a  href="{{URL::route('listaUsuarios')}}">
+						  <i class="glyphicon glyphicon-th-list"></i> <span>Lista</span>
+						</a>
+					</li>
+					
+					
+					<li class="{{Route::currentRouteName() == ('permisosCuenta') ? 'active ' : '' }}">
+						<a  href="{{URL::route('permisosCuenta')}}">
+							<i class="glyphicon glyphicon-user"></i> <span>Permisos</span>
+						</a>
+					</li>
+					<li class="{{Route::currentRouteName() == ('crearRol') ? 'active ' : '' }}">
+						<a  href="{{URL::route('crearRol')}}">
+							<i class="glyphicon glyphicon-tags"></i> <span>Crear rol</span>
+						</a>
+					</li>
+				</ul>
+			</li>
+			
 		  </ul>   
 	</nav>
   </div>

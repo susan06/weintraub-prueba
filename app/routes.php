@@ -200,6 +200,16 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth'), function()
     Route::controller('Ordenes', 'OrdenController');
     //************ End Orden  ***************************************************
 	
+    //*************** Usuarios ************************************************************
+	   Route::get("accounts-create",			array('as' => "crearCuenta", 			'uses' => 'AccountController@crearCuenta'));
+       Route::get("accounts-list/",				array('as' => "listaUsuarios", 			'uses' => 'AccountController@listaUsuarios'));
+       Route::get("accounts-permits",			array('as' => "permisosCuenta", 		'uses' => 'AccountController@permisosCuenta'));
+       Route::post("accounts/tablapermisos/",	array('as' => "tablaPermisos", 			'uses' => 'RolesController@tablaRolesPermiso'));
+       Route::post("accounts/cambiarpermisos/",	array('as' => "cambiarPermisos", 		'uses' => 'RolesController@cambiarPermisos'));
+       Route::get("accounts-create-role",		array('as' => "crearRol", 				'uses' => 'RolesController@vistaCrear'));
+       Route::post("accounts/role",				array('as' => "rol", 					'uses' => 'RolesController@crearRol'));
+       Route::post("accounts/delete/role",		array('as' => "eliminarRol", 			'uses' => 'RolesController@eliminarRol'));
+    //****************End Usuarios *********************************************************************  	
 	
 });
 
