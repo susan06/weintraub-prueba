@@ -20,6 +20,10 @@ Route::model('sucursales', 'Sucursales', function()
 {
     throw new NotFoundHttpException;
 });
+Route::model('unidades', 'Unidades', function()
+{
+    throw new NotFoundHttpException;
+});
 /** ------------------------------------------
  *  Route constraint patterns
  *  ------------------------------------------
@@ -28,6 +32,7 @@ Route::pattern('user', '[0-9]+');
 Route::pattern('role', '[0-9]+');
 Route::pattern('token', '[0-9a-z]+');
 Route::pattern('sucursales', '[0-9]+');
+Route::pattern('unidades', '[0-9]+');
 
 # Index Page -login
 Route::get('/', array('uses' => 'HomeController@getIndex'));
@@ -53,6 +58,25 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth'), function()
     Route::controller('Sucursales', 'SucursalesController');
     //************ End Sucursales  ***************************************************
 
+	 //************ Unidades  ***************************************************
+    Route::get('unidades/',                          array( 'as' => 'see.unidades',             'uses' =>'UnidadesController@getIndex'));
+    Route::get('unidades/create',                    array( 'as' => 'create.unidades',          'uses' =>'UnidadesController@getCreate'));
+    Route::post('unidades/post/create',              array( 'as' => 'post.create.unidades',     'uses' =>'UnidadesController@postCreate'));
+    Route::get('unidades/edit/{unidades}',           array( 'as' => 'edit.unidades',            'uses' =>'UnidadesController@getEdit'));
+    Route::post('unidades/{unidades}/edit',          array( 'as' => 'post.edit.unidades',       'uses' =>'UnidadesController@postEdit'));
+    Route::get('unidades/delete/{unidades}',         array( 'as' => 'delete.unidades',          'uses' =>'UnidadesController@getDelete'));
+    Route::controller('Unidades', 'UnidadesController');
+    //************ End Unidades  ***************************************************
+
+   //************ Materia Prima  ***************************************************
+    Route::get('materias/',                          array( 'as' => 'see.materias',             'uses' =>'MateriasController@getIndex'));
+    Route::get('materias/create',                    array( 'as' => 'create.materias',          'uses' =>'MateriasController@getCreate'));
+    Route::post('materias/post/create',              array( 'as' => 'post.create.materias',     'uses' =>'MateriasController@postCreate'));
+    Route::get('materias/edit/{materias}',           array( 'as' => 'edit.materias',            'uses' =>'MateriasController@getEdit'));
+    Route::post('materias/{materias}/edit',          array( 'as' => 'post.edit.unidades',       'uses' =>'MateriasController@postEdit'));
+    Route::get('materias/delete/{materias}',         array( 'as' => 'delete.materias',          'uses' =>'MateriasController@getDelete'));
+    Route::controller('materias', 'MateriasController');
+    //************ End Materia Prima  ***************************************************	
 });
 
 

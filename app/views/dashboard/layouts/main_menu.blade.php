@@ -31,6 +31,32 @@
 					</div>
 				</a>
 			</li>
+			<!--Unidades-->
+			 <li class="{{Route::currentRouteName() == ('see.unidades') ? 'active' : '' }}">
+				<a href="{{URL::route('see.unidades')}}">
+					<div class="item-content">
+						<div class="item-media">
+							<i class="ti-paint-bucket"></i>
+						</div>
+						<div class="item-inner">
+							<span class="title"> Unidades </span>
+						</div>
+					</div>
+				</a>
+			</li>
+			<!--materia prima-->
+			<li class="{{Route::currentRouteName() == ('see.materias') ? 'active' : '' }}">
+				<a href="{{URL::route('see.materias')}}">
+					<div class="item-content">
+						<div class="item-media">
+							<i class="ti-export"></i>
+						</div>
+						<div class="item-inner">
+							<span class="title"> Materia Prima </span>
+						</div>
+					</div>
+				</a>
+			</li>
 		  </ul>   
 	</nav>
   </div>
