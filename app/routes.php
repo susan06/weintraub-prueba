@@ -183,6 +183,24 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth'), function()
     Route::controller('Pedidos', 'PedidosController');
     //************ End Pedidos  ***************************************************
 	
+	//************ Orden  ***************************************************
+    Route::get('orden/',                          array( 'as' => 'see.orden',             'uses' =>'OrdenController@getIndex'));
+    Route::post('orden/post/list',                array( 'as' => 'post.list.orden',       'uses' =>'OrdenController@postList'));
+    Route::get('orden/create',                    array( 'as' => 'create.orden',          'uses' =>'OrdenController@getCreate'));
+    Route::post('orden/add-pedidos',              array( 'as' => 'add.pedidos.orden',     'uses' =>'OrdenController@postNew'));
+    Route::post('orden/post/create',              array( 'as' => 'post.create.orden',     'uses' =>'OrdenController@postCreate'));
+    Route::get('orden/pedidos',                   array( 'as' => 'pedidos.orden',         'uses' =>'OrdenController@getPedidos'));
+    Route::get('orden/edit/{orden}',              array( 'as' => 'edit.orden',            'uses' =>'OrdenController@getEdit'));
+    Route::post('orden/{orden}/edit',             array( 'as' => 'post.edit.orden',       'uses' =>'OrdenController@postEdit'));  
+    Route::post('orden/{orden}/edit',             array( 'as' => 'post.edit.orden',       'uses' =>'OrdenController@postEdit'));  
+    Route::get('orden/show/{orden}/{valor}',      array( 'as' => 'show.orden',            'uses' =>'OrdenController@getShow'));
+    Route::get('orden/show/excel/{orden}',        array( 'as' => 'show.excel.orden',      'uses' =>'OrdenController@getShowexcel'));
+    Route::get('orden/delete/{orden}',            array( 'as' => 'delete.orden',          'uses' =>'OrdenController@getDelete'));
+    Route::get('orden/borrar/{ordenpedido}',      array( 'as' => 'borrar.orden',          'uses' =>'OrdenController@getBorrar'));
+    Route::controller('Ordenes', 'OrdenController');
+    //************ End Orden  ***************************************************
+	
+	
 });
 
 

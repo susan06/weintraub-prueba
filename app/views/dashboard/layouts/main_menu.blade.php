@@ -109,6 +109,19 @@
 					</div>
 				</a>
 			</li>
+			<!--orden de compra-->
+			<li class="{{Route::currentRouteName() == ('see.orden') ? 'active' : '' }}">
+				<a href="{{URL::route('see.orden')}}">
+					<div class="item-content">
+						<div class="item-media">
+							<i class="ti-money"></i>
+						</div>
+						<div class="item-inner">
+							<span class="title"> Orden de Compra </span>
+						</div>
+					</div>
+				</a>
+			</li>
 		  </ul>   
 	</nav>
   </div>
