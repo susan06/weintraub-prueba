@@ -83,6 +83,32 @@
 					</div>
 				</a>
 			</li>
+			<!--platillos-->
+			<li class="{{Route::currentRouteName() == ('see.platillos') ? 'active' : '' }}">
+				<a href="{{URL::route('see.platillos')}}">
+					<div class="item-content">
+						<div class="item-media">
+							<i class="ti-control-record"></i>
+						</div>
+						<div class="item-inner">
+							<span class="title"> Platillos </span>
+						</div>
+					</div>
+				</a>
+			</li>
+			<!--pedidos-->
+			 <li class="{{Route::currentRouteName() == ('see.pedidos') ? 'active' : '' }}">
+				<a href="{{URL::route('see.pedidos')}}">
+					<div class="item-content">
+						<div class="item-media">
+							<i class="ti-truck"></i>
+						</div>
+						<div class="item-inner">
+							<span class="title"> Pedidos </span>
+						</div>
+					</div>
+				</a>
+			</li>
 		  </ul>   
 	</nav>
   </div>

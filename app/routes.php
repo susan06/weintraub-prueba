@@ -12,7 +12,48 @@
  */
 Route::model('user', 'User');
 Route::model('role', 'Role');
+Route::model('unidades', 'Unidades', function()
+{
+    throw new NotFoundHttpException;
+});
+Route::model('materias', 'Materias', function()
+{
+    throw new NotFoundHttpException;
+});
+
+Route::model('platillos', 'Platillos', function()
+{
+    throw new NotFoundHttpException;
+});
+
+Route::model('platillosmp', 'Platillosmp', function()
+{
+    throw new NotFoundHttpException;
+});
+
+Route::model('pedidos', 'Pedidos', function()
+{
+    throw new NotFoundHttpException;
+});
+Route::model('pedidosplat', 'Pedidosplat', function()
+{
+    throw new NotFoundHttpException;
+});
+Route::model('empaques', 'Empaques', function()
+{
+    throw new NotFoundHttpException;
+});
+Route::model('empaquesmp', 'EmpaquesMp', function()
+{
+    throw new NotFoundHttpException;
+});
+
 Route::model('orden', 'Orden', function()
+{
+    throw new NotFoundHttpException;
+});
+
+Route::model('ordenpedido', 'Ordenpedido', function()
 {
     throw new NotFoundHttpException;
 });
@@ -20,15 +61,8 @@ Route::model('sucursales', 'Sucursales', function()
 {
     throw new NotFoundHttpException;
 });
-Route::model('unidades', 'Unidades', function()
-{
-    throw new NotFoundHttpException;
-});
+
 Route::model('proveedores', 'Proveedores', function()
-{
-    throw new NotFoundHttpException;
-});
-Route::model('empaques', 'Empaques', function()
 {
     throw new NotFoundHttpException;
 });
@@ -44,6 +78,15 @@ Route::pattern('sucursales', '[0-9]+');
 Route::pattern('unidades', '[0-9]+');
 Route::pattern('proveedores', '[0-9]+');
 Route::pattern('empaques', '[0-9]+');
+Route::pattern('platillos', '[0-9]+');
+Route::pattern('pedidos', '[0-9]+');
+Route::pattern('pedidosplat', '[0-9]+');
+Route::pattern('empaques', '[0-9]+');
+Route::pattern('empaquesmp', '[0-9]+');
+Route::pattern('orden', '[0-9]+');
+Route::pattern('ordenpedido', '[0-9]+');
+Route::pattern('sucursales', '[0-9]+');
+Route::pattern('proveedores', '[0-9]+');
 
 # Index Page -login
 Route::get('/', array('uses' => 'HomeController@getIndex'));
@@ -113,6 +156,32 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth'), function()
     Route::get('empaques/borrar/{empaquesmp}',       array( 'as' => 'borrar.empaques',          'uses' =>'EmpaquesController@getBorrar'));
     Route::controller('Empaques', 'EmpaquesController');
     //************ End Empaques  ***************************************************
+
+  //************ Platillos  ***************************************************
+    Route::get('platillos/',                          array( 'as' => 'see.platillos',                  'uses' =>'PlatillosController@getIndex'));
+    Route::get('platillos/create',                    array( 'as' => 'create.platillos',               'uses' =>'PlatillosController@getCreate'));
+    Route::post('platillos/post/create',              array( 'as' => 'post.create.platillos',          'uses' =>'PlatillosController@postCreate'));
+    Route::post('platillos/{platillos}/edit',         array( 'as' => 'post.edit.platillos',            'uses' =>'PlatillosController@postEdit'));  
+    Route::post('platillos/{platillosmps}/editar',    array( 'as' => 'editar.platillos',               'uses' =>'PlatillosController@postEditar'));  
+    Route::post('platillos/create-platillos',         array( 'as' => 'create.platillos.materias',      'uses' =>'PlatillosController@postNew'));  
+    Route::get("platillos/mat",                       array( 'as' => 'mat.platillos',                  'uses' =>'PlatillosController@getMaterias'));
+    Route::get("platillos/unid",                      array( 'as' => 'mat.unidades',                   'uses' =>'PlatillosController@getUnidades'));
+    Route::controller('Platillos', 'PlatillosController');
+    //************ End Platillos  ***************************************************	
+	
+	 //************ Pedidos  ***************************************************
+    Route::get('pedidos/',                          array( 'as' => 'see.pedidos',                   'uses' =>'PedidosController@getIndex'));
+    Route::get('pedidos/create',                    array( 'as' => 'create.pedidos',                'uses' =>'PedidosController@getCreate'));
+    Route::post('pedidos/post/create',              array( 'as' => 'post.create.pedidos',           'uses' =>'PedidosController@postCreate'));
+    Route::post('pedidos/add-platillos',            array( 'as' => 'add.platillos.pedidos',         'uses' =>'PedidosController@postNew'));
+    Route::get('pedidos/edit/{pedidos}',            array( 'as' => 'edit.pedidos',                  'uses' =>'PedidosController@getEdit'));
+    Route::post('pedidos/{pedidos}/edit',           array( 'as' => 'post.edit.pedidos',             'uses' =>'PedidosController@postEdit'));  
+    Route::post('pedidos/{pedidosplat}/editar',     array( 'as' => 'editar.pedidos',                'uses' =>'PedidosController@postEditar'));  
+    Route::get('pedidos/plat',                      array( 'as' => 'plat.pedidos',                  'uses' =>'PedidosController@getPlatillos'));
+    Route::get('pedidos/delete/{pedidos}',          array( 'as' => 'delete.pedidos',                'uses' =>'PedidosController@getDelete'));
+    Route::get('pedidos/borrar/{pedidosplat}',      array( 'as' => 'borrar.pedidos',                'uses' =>'PedidosController@getBorrar'));
+    Route::controller('Pedidos', 'PedidosController');
+    //************ End Pedidos  ***************************************************
 	
 });
 
