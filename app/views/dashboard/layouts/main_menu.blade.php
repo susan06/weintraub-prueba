@@ -57,6 +57,32 @@
 					</div>
 				</a>
 			</li>
+			<!--proveedores-->
+			<li class="{{Route::currentRouteName() == ('see.proveedores') ? 'active' : '' }}">
+				<a href="{{URL::route('see.proveedores')}}">
+					<div class="item-content">
+						<div class="item-media">
+							<i class="ti-thumb-up"></i>
+						</div>
+						<div class="item-inner">
+							<span class="title"> Proveedores </span>
+						</div>
+					</div>
+				</a>
+			</li>
+			<!--empaques-->
+			 <li class="{{Route::currentRouteName() == ('see.empaques') ? 'active' : '' }}">
+				<a href="{{URL::route('see.empaques')}}">
+					<div class="item-content">
+						<div class="item-media">
+							<i class="ti-package"></i>
+						</div>
+						<div class="item-inner">
+							<span class="title"> Empaques </span>
+						</div>
+					</div>
+				</a>
+			</li>
 		  </ul>   
 	</nav>
   </div>

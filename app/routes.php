@@ -24,6 +24,15 @@ Route::model('unidades', 'Unidades', function()
 {
     throw new NotFoundHttpException;
 });
+Route::model('proveedores', 'Proveedores', function()
+{
+    throw new NotFoundHttpException;
+});
+Route::model('empaques', 'Empaques', function()
+{
+    throw new NotFoundHttpException;
+});
+
 /** ------------------------------------------
  *  Route constraint patterns
  *  ------------------------------------------
@@ -33,6 +42,8 @@ Route::pattern('role', '[0-9]+');
 Route::pattern('token', '[0-9a-z]+');
 Route::pattern('sucursales', '[0-9]+');
 Route::pattern('unidades', '[0-9]+');
+Route::pattern('proveedores', '[0-9]+');
+Route::pattern('empaques', '[0-9]+');
 
 # Index Page -login
 Route::get('/', array('uses' => 'HomeController@getIndex'));
@@ -77,6 +88,32 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth'), function()
     Route::get('materias/delete/{materias}',         array( 'as' => 'delete.materias',          'uses' =>'MateriasController@getDelete'));
     Route::controller('materias', 'MateriasController');
     //************ End Materia Prima  ***************************************************	
+	
+	 //************ Proveedores  ***************************************************
+    Route::get('proveedores/',                       array( 'as' => 'see.proveedores',             'uses' =>'ProveedoresController@getIndex'));
+    Route::get('proveedores/create',                 array( 'as' => 'create.proveedores',          'uses' =>'ProveedoresController@getCreate'));
+    Route::post('proveedores/post/create',           array( 'as' => 'post.create.proveedores',     'uses' =>'ProveedoresController@postCreate'));
+    Route::get('proveedores/edit/{proveedores}',     array( 'as' => 'edit.proveedores',            'uses' =>'ProveedoresController@getEdit'));
+    Route::post('proveedores/{proveedores}/edit',    array( 'as' => 'post.edit.proveedores',       'uses' =>'ProveedoresController@postEdit'));
+    Route::get('proveedores/delete/{id}',            array( 'as' => 'delete.proveedores',          'uses' =>'ProveedoresController@getDelete'));
+    Route::get('proveedores/sel',                    array( 'as' => 'sel.proveedores',             'uses' =>'ProveedoresController@getProveedores'));
+    Route::controller('Proveedores', 'ProveedoresController');
+    //************ End Proveedores  ***************************************************
+	
+	  //************ Empaques  ***************************************************
+    Route::get('empaques/',                          array( 'as' => 'see.empaques',             'uses' =>'EmpaquesController@getIndex'));
+    Route::get('empaques/create',                    array( 'as' => 'create.empaques',          'uses' =>'EmpaquesController@getCreate'));
+    Route::post('empaques/post/create',              array( 'as' => 'post.create.empaques',     'uses' =>'EmpaquesController@postCreate'));
+    Route::post('empaques/add-empaques',             array( 'as' => 'add.empaques',             'uses' =>'EmpaquesController@postNew'));
+    Route::get('empaques/edit/{empaques}',           array( 'as' => 'edit.empaques',            'uses' =>'EmpaquesController@getEdit'));
+    Route::post('empaques/{empaques}/edit',          array( 'as' => 'post.edit.empaques',       'uses' =>'EmpaquesController@postEdit')); 
+    Route::post('empaques/{empaquesmp}/editar',      array( 'as' => 'editar.empaques.emp',      'uses' =>'EmpaquesController@postEditar'));
+    Route::get("empaques/unidad",                    array( 'as' => 'empaque.unidad',           'uses' =>'EmpaquesController@getunidad'));
+    Route::get('empaques/delete/{empaques}',         array( 'as' => 'delete.empaques',          'uses' =>'EmpaquesController@getDelete'));
+    Route::get('empaques/borrar/{empaquesmp}',       array( 'as' => 'borrar.empaques',          'uses' =>'EmpaquesController@getBorrar'));
+    Route::controller('Empaques', 'EmpaquesController');
+    //************ End Empaques  ***************************************************
+	
 });
 
 
