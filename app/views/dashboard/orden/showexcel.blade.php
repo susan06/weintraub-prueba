@@ -1,15 +1,7 @@
-<?php
-header("Content-type: text/csv"); 
-header("Content-Disposition: attachment; filename=file.csv");
-header("Pragma: no-cache"); 
-header("Expires: 0");
-?>
-
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <table>
  <tbody>
- 
    <tr>
    <td>Datos De la Orden de Compra:</td>
    <td><b>{{$orden->nombre}}</b></td>

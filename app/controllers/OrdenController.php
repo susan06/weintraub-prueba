@@ -142,53 +142,69 @@ class OrdenController extends \BaseController {
 
 	//funcion de ver excel con maatwebsite
 	public function getShowexcel(Orden $orden)
-	{		
+	{	
+	    $data['orden'] = $orden;
+		$data['datos']['nombre']= $orden->nombre;
+		$data['datos']['responsable']= $orden->Usuario->username;
+		$data['datos']['fecha']= $orden->created_at;
+		
+		$ordenpedido  = Ordenpedido::where('id_orden','=',$orden->id)->get();
+		$a=0; $b=0; $c=0; $d=0; $e=0; $f=0;
+
+		foreach($ordenpedido as $ord){
+		$orde[$a]=$ord;
+			foreach(Pedidos::where('id','=',$ord->id_pedido)->get() as $ped){
+			$pedido[$b]=$ped->sucursal;
+				foreach(Pedidosplat::where('id_pedido','=',$ped->id)->get() as $pedplat){
+				$pedidosplatillos[$c]=$pedplat;
+					foreach(Platillos::where('id','=',$pedplat->id_platillo)->get() as $plat){
+					$plats[$d]=$plat;
+						foreach(PlatillosMp::where('platillos_id','=',$plat->id)->get() as $platmp){
+						$platsmp[$e]=$platmp;
+							foreach(Materias::where('id','=',$platmp->materia_prima)->get() as $materia){
+							$materias[$f]=$materia->id;
+							$f++;
+							} 
+						$e++;
+						}
+					$d++;
+					}
+				$c++;
+				}	
+			$b++;
+			}
+		$a++;	
+		}
+				
+		$materiasall= Materias::whereIn('id', $materias)->get();
+		$sucursales= Sucursales::whereIn('id', $pedido)->get();
+
+																
 		$excel = App::make('excel');
 			
-		Excel::create('orden-'.$orden->id, function($excel) use ($orden) {
+		Excel::create('orden-'.$orden->id, function($excel) use ($data) {
 
-			$excel->sheet('First sheet', function($sheet) use ($orden) {
-
-				$ordenpedido  = Ordenpedido::where('id_orden','=',$orden->id)->get();
-				$a=0; $b=0; $c=0; $d=0; $e=0; $f=0;
-
-				foreach($ordenpedido as $ord){
-				$orde[$a]=$ord;
-		            foreach(Pedidos::where('id','=',$ord->id_pedido)->get() as $ped){
-		            $pedido[$b]=$ped->sucursal;
-		                foreach(Pedidosplat::where('id_pedido','=',$ped->id)->get() as $pedplat){
-		                $pedidosplatillos[$c]=$pedplat;
-		                  	foreach(Platillos::where('id','=',$pedplat->id_platillo)->get() as $plat){
-		                  	$plats[$d]=$plat;
-		                    	foreach(PlatillosMp::where('platillos_id','=',$plat->id)->get() as $platmp){
-		                    	$platsmp[$e]=$platmp;
-		                        	foreach(Materias::where('id','=',$platmp->materia_prima)->get() as $materia){
-		                        	$materias[$f]=$materia->id;
-		                        	$f++;
-									} 
-								$e++;
-								}
-							$d++;
-							}
-						$c++;
-						}	
-					$b++;
-					}
-				$a++;	
-				}
-						
-				$materiasall= Materias::whereIn('id', $materias)->get();
-				$sucursales= Sucursales::whereIn('id', $pedido)->get();
-
-				$sheet->loadView('dashboard.orden.excelprueba', ['orden' => $orden,
-																'ordenpedido' => $ordenpedido,
-																'materiasall' => $materiasall,
-																'orde' => $orde,
-																'pedido' => $pedido,
-																'pedidosplatillos' => $pedidosplatillos,
-																'plats' => $plats,
-																'platsmp' => $platsmp,
-																'sucursales' => $sucursales]);		
+			$excel->sheet('First sheet', function($sheet) use ($data) {
+			
+			$sheet->cell('A1', function($cell) {
+				$cell->setFontSize(16);
+				$cell->setFontWeight('bold');
+			});
+			
+			$sheet->row(1, array('Datos De la Orden de Compra'));
+			$sheet->row(2, array('Orden de Compra:', $data['datos']['nombre']));
+			$sheet->row(3, array('Responsable:', $data['datos']['responsable']));
+			$sheet->row(4, array('Fecha:', $data['datos']['fecha']));
+			
+				//$sheet->loadView('dashboard.orden.showexcel', ['orden' => $orden,
+																//'ordenpedido' => $ordenpedido,
+																//'materiasall' => $materiasall,
+																//'orde' => $orde,
+																//'pedido' => $pedido,
+																//'pedidosplatillos' => $pedidosplatillos,
+																//'plats' => $plats,
+																//'platsmp' => $platsmp,
+																//'sucursales' => $sucursales]);		
 			});
 
 	   })->download('xls');
