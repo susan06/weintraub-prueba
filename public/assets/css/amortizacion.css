@@ -1,0 +1,31 @@
+.tabla {
+	border-left: solid 1px;
+	border-right: solid 1px;
+	border-collapse: collapse;
+	
+	font-size: 1.1em;
+	/*text-align: center;*/
+}
+.tabla th, tr th {
+	padding: 4px;
+	min-width: 100px;
+}
+.tabla td {
+	border-bottom: 1px solid;
+	padding: 5px;
+}
+.caja {
+	overflow: auto;
+	padding: 5px;
+	margin-bottom: 10px;
+	
+}
+.blanco {
+	color:white;
+}
+.caja1 {
+	padding: 5px;
+	border:solid 1px white;
+	float:left;
+
+}

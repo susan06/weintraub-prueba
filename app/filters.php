@@ -37,7 +37,7 @@ Route::filter('auth', function()
 {
 	if ( Auth::guest() ) // If the user is not logged in
 	{
-        	return Redirect::guest('user/login');
+        	return Redirect::guest('/')->with('error', 'Debe loguearse primero' );
 	}
 });
 
@@ -59,7 +59,7 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('user/login/');
+	if (Auth::check()) return Redirect::to('/');
 });
 
 /*
@@ -70,15 +70,6 @@ Route::filter('guest', function()
 | Access filters based on roles.
 |
 */
-
-// Check for role on all admin routes
-Entrust::routeNeedsRole( 'admin*', array('admin'), Redirect::to('/') );
-
-// Check for permissions on admin actions
-Entrust::routeNeedsPermission( 'admin/blogs*', 'manage_blogs', Redirect::to('/admin') );
-Entrust::routeNeedsPermission( 'admin/comments*', 'manage_comments', Redirect::to('/admin') );
-Entrust::routeNeedsPermission( 'admin/users*', 'manage_users', Redirect::to('/admin') );
-Entrust::routeNeedsPermission( 'admin/roles*', 'manage_roles', Redirect::to('/admin') );
 
 /*
 |--------------------------------------------------------------------------

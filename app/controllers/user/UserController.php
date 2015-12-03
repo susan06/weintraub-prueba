@@ -26,20 +26,6 @@ class UserController extends BaseController {
     }
 
     /**
-     * Users settings page
-     *
-     * @return View
-     */
-    public function getIndex()
-    {
-        list($user,$redirect) = $this->user->checkAuthAndRedirect('user');
-        if($redirect){return $redirect;}
-
-        // Show the page
-        return View::make('site/user/index', compact('user'));
-    }
-
-    /**
      * Stores new user
      *
      */
@@ -118,7 +104,7 @@ class UserController extends BaseController {
      */
     public function getCreate()
     {
-        return View::make('site/user/create');
+        return View::make('user/create');
     }
 
 
@@ -133,7 +119,7 @@ class UserController extends BaseController {
             return Redirect::to('/');
         }
 
-        return View::make('site/user/login');
+        return View::make('login');
     }
 
     /**
@@ -146,7 +132,7 @@ class UserController extends BaseController {
         $input = Input::all();
 
         if ($this->userRepo->login($input)) {
-            return Redirect::intended('/');
+            return Redirect::intended('/dashboard/home');
         } else {
             if ($this->userRepo->isThrottled($input)) {
                 $err_msg = Lang::get('confide::confide.alerts.too_many_attempts');
@@ -156,7 +142,7 @@ class UserController extends BaseController {
                 $err_msg = Lang::get('confide::confide.alerts.wrong_credentials');
             }
 
-            return Redirect::to('user/login')
+            return Redirect::to('/')
                 ->withInput(Input::except('password'))
                 ->with('error', $err_msg);
         }
@@ -189,7 +175,7 @@ class UserController extends BaseController {
      */
     public function getForgot()
     {
-        return View::make('site/user/forgot');
+        return View::make('user/forgot');
     }
 
     /**
@@ -217,7 +203,7 @@ class UserController extends BaseController {
     public function getReset( $token )
     {
 
-        return View::make('site/user/reset')
+        return View::make('user/reset')
             ->with('token',$token);
     }
 
@@ -276,7 +262,7 @@ class UserController extends BaseController {
             return App::abort(404);
         }
 
-        return View::make('site/user/profile', compact('user'));
+        return View::make('user/profile', compact('user'));
     }
 
     public function getSettings()
@@ -284,7 +270,7 @@ class UserController extends BaseController {
         list($user,$redirect) = User::checkAuthAndRedirect('user/settings');
         if($redirect){return $redirect;}
 
-        return View::make('site/user/profile', compact('user'));
+        return View::make('user/profile', compact('user'));
     }
 
     /**
@@ -305,4 +291,31 @@ class UserController extends BaseController {
         }
         return $redirect;
     }
+	/**
+     * subir foto de perfil
+     */
+	public function subirImagen() 
+	{
+		$data = Input::all();
+		$reglas = array("img" => "required|image");
+		
+		$mensajes = array(
+				"img.required" => "Debes seleccionar una imagen",
+				"img.image" => "El archivo no es una imagen"
+			);
+			
+		$validar = Validator::make($data,$reglas,$mensajes);
+		
+		if ($validar->passes()) {
+			$name = Input::file("img")->getClientOriginalName();
+			$exp = explode(".",$name);
+			$extension = end($exp);
+			        Input::file("img")->move("imgp/",Auth::user()->email.".".$extension);
+			Usuario::where("id","=",Auth::user()->id)->update(array("img" => Auth::user()->email.".".$extension));
+			return Redirect::to(URL::route('home'));
+		} else {
+			Input::flash();
+			return Redirect::to(URL::route('home'))->withErrors($validar);
+		}
+	}
 }
