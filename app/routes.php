@@ -109,7 +109,7 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth'), function()
     Route::get('sucursales/edit/{sucursales}',         array( 'as' => 'edit.sucursales',        'uses' =>'SucursalesController@edit'));
     Route::post('sucursales/{sucursales}/edit',        array( 'as' => 'post.edit.sucursales',   'uses' =>'SucursalesController@update'));
     Route::get('sucursales/delete/{sucursales}',       array( 'as' => 'delete.sucursales',      'uses' =>'SucursalesController@destroy'));
-    Route::controller('Sucursales', 'SucursalesController');
+    Route::controller('sucursales', 'SucursalesController');
     //************ End Sucursales  ***************************************************
 
 	 //************ Unidades  ***************************************************
@@ -119,7 +119,7 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth'), function()
     Route::get('unidades/edit/{unidades}',           array( 'as' => 'edit.unidades',            'uses' =>'UnidadesController@getEdit'));
     Route::post('unidades/{unidades}/edit',          array( 'as' => 'post.edit.unidades',       'uses' =>'UnidadesController@postEdit'));
     Route::get('unidades/delete/{unidades}',         array( 'as' => 'delete.unidades',          'uses' =>'UnidadesController@getDelete'));
-    Route::controller('Unidades', 'UnidadesController');
+    Route::controller('unidades', 'UnidadesController');
     //************ End Unidades  ***************************************************
 
    //************ Materia Prima  ***************************************************
@@ -140,7 +140,7 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth'), function()
     Route::post('proveedores/{proveedores}/edit',    array( 'as' => 'post.edit.proveedores',       'uses' =>'ProveedoresController@postEdit'));
     Route::get('proveedores/delete/{id}',            array( 'as' => 'delete.proveedores',          'uses' =>'ProveedoresController@getDelete'));
     Route::get('proveedores/sel',                    array( 'as' => 'sel.proveedores',             'uses' =>'ProveedoresController@getProveedores'));
-    Route::controller('Proveedores', 'ProveedoresController');
+    Route::controller('proveedores', 'ProveedoresController');
     //************ End Proveedores  ***************************************************
 	
 	  //************ Empaques  ***************************************************
@@ -154,7 +154,7 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth'), function()
     Route::get("empaques/unidad",                    array( 'as' => 'empaque.unidad',           'uses' =>'EmpaquesController@getunidad'));
     Route::get('empaques/delete/{empaques}',         array( 'as' => 'delete.empaques',          'uses' =>'EmpaquesController@getDelete'));
     Route::get('empaques/borrar/{empaquesmp}',       array( 'as' => 'borrar.empaques',          'uses' =>'EmpaquesController@getBorrar'));
-    Route::controller('Empaques', 'EmpaquesController');
+    Route::controller('empaques', 'EmpaquesController');
     //************ End Empaques  ***************************************************
 
   //************ Platillos  ***************************************************
@@ -166,7 +166,7 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth'), function()
     Route::post('platillos/create-platillos',         array( 'as' => 'create.platillos.materias',      'uses' =>'PlatillosController@postNew'));  
     Route::get("platillos/mat",                       array( 'as' => 'mat.platillos',                  'uses' =>'PlatillosController@getMaterias'));
     Route::get("platillos/unid",                      array( 'as' => 'mat.unidades',                   'uses' =>'PlatillosController@getUnidades'));
-    Route::controller('Platillos', 'PlatillosController');
+    Route::controller('platillos', 'PlatillosController');
     //************ End Platillos  ***************************************************	
 	
 	 //************ Pedidos  ***************************************************
@@ -180,7 +180,7 @@ Route::group(array('prefix' => 'dashboard', 'before' => 'auth'), function()
     Route::get('pedidos/plat',                      array( 'as' => 'plat.pedidos',                  'uses' =>'PedidosController@getPlatillos'));
     Route::get('pedidos/delete/{pedidos}',          array( 'as' => 'delete.pedidos',                'uses' =>'PedidosController@getDelete'));
     Route::get('pedidos/borrar/{pedidosplat}',      array( 'as' => 'borrar.pedidos',                'uses' =>'PedidosController@getBorrar'));
-    Route::controller('Pedidos', 'PedidosController');
+    Route::controller('pedidos', 'PedidosController');
     //************ End Pedidos  ***************************************************
 	
 	//************ Orden  ***************************************************
@@ -226,4 +226,4 @@ Route::controller('user', 'UserController');# User RESTful Routes (Login, Logout
 
 
 Route::get('excel/{orden}', 'PruebasController@getShowexcel');
-Route::controller('Pruebas', 'PruebasController');
+Route::controller('pruebas', 'PruebasController');

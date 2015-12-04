@@ -141,7 +141,7 @@ class OrdenController extends \BaseController {
 	}
 
 	//funcion de ver excel con maatwebsite
-	public function getShowexcel(Orden $orden)
+	public function getShowexcel1(Orden $orden)
 	{	
 	    $data['orden'] = $orden;
 		$data['datos']['nombre']= $orden->nombre;
@@ -210,6 +210,103 @@ class OrdenController extends \BaseController {
 	   })->download('xls');
 
 	}
+
+	public function getShowexcel(Orden $orden)
+	{	
+	   													
+		$excel = App::make('excel');
+			
+		Excel::create('orden-'.$orden->id, function($excel) use ($orden) {
+
+
+			$excel->sheet('First sheet', function($sheet) use ($orden) {
+
+		$ordenpedido  = Ordenpedido::where('id_orden','=',$orden->id)->get();
+		$a=0; $b=0; $c=0; $d=0; $e=0; $f=0;
+
+		foreach($ordenpedido as $ord){
+		$orde[$a]=$ord;
+			foreach(Pedidos::where('id','=',$ord->id_pedido)->get() as $ped){
+			$pedido[$b]=$ped->sucursal;
+				foreach(Pedidosplat::where('id_pedido','=',$ped->id)->get() as $pedplat){
+				$pedidosplatillos[$c]=$pedplat;
+					foreach(Platillos::where('id','=',$pedplat->id_platillo)->get() as $plat){
+					$plats[$d]=$plat;
+						foreach(PlatillosMp::where('platillos_id','=',$plat->id)->get() as $platmp){
+						$platsmp[$e]=$platmp;
+							foreach(Materias::where('id','=',$platmp->materia_prima)->get() as $materia){
+							$materias[$f]=$materia->id;
+							$f++;
+							} 
+						$e++;
+						}
+					$d++;
+					}
+				$c++;
+				}	
+			$b++;
+			}
+		$a++;	
+		}
+				
+		$materiasall= Materias::whereIn('id', $materias)->get();
+		$sucursales= Sucursales::whereIn('id', $pedido)->get();
+		//variables para orden general
+		$total_g=0;
+		$total_gen[]=0;
+		$cant_gen=0;
+		$sobrante_gen=0;
+
+		$ordenpedido  = Ordenpedido::where('id_orden','=',$orden->id)->get();
+		$a=0; $b=0; $c=0; $d=0; $e=0; $f=0;
+		
+		//para compra general
+		foreach($materiasall as $mat){
+			foreach($ordenpedido as $ord){
+			$orde1[$a]=$ord;
+				foreach(Pedidos::where('id','=',$ord->id_pedido)->get() as $ped){
+				$pedido1[$b]=$ped->sucursal;
+					foreach(Pedidosplat::where('id_pedido','=',$ped->id)->get() as $pedplat){
+					$pedidosplatillos1[$c]=$pedplat;
+						foreach(Platillos::where('id','=',$pedplat->id_platillo)->get() as $plat){
+						$plats1[$d]=$plat;
+							foreach(PlatillosMp::where('platillos_id','=',$plat->id)->get() as $platmp){
+							$platsmp1[$e]=$platmp;										
+												
+							if($mat->id==$platmp->materia_prima){
+	                            $total_g=$total_g+($platmp->cantidad_mp*$pedplat->cantidad);
+	                            }                               
+	                        $e++;}                       
+						$d++;
+						}
+					$c++;
+					}	
+				$b++;
+				}
+			$a++;	
+			}
+
+	                        $total_general[$f]=$total_g.' '.$mat->Unidades->nombre;
+	                        $f++;                                                             
+                        
+		}			
+			
+				$sheet->loadView('dashboard.orden.showexcel', ['orden' => $orden,
+																'ordenpedido' => $ordenpedido,
+																'materiasall' => $materiasall,
+																'orde' => $orde,
+																'pedido' => $pedido,
+																'total_general' => $total_general,
+																'pedidosplatillos' => $pedidosplatillos,
+																'plats' => $plats,
+																'platsmp' => $platsmp,													
+																'sucursales' => $sucursales]);		
+			});
+
+	   })->download('xls');
+
+	}
+
 
 	public function getEdit(Orden $orden)
     {

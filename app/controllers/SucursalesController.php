@@ -4,13 +4,14 @@ class SucursalesController extends \BaseController {
 	 	
 	public function index()
 	{
+		$sucursales= Sucursales::all();
 		return View::make('dashboard/sucursales/index', compact('sucursales'));
 	}
 	/**
 	 * Show the form for creating a new resource.
 	 */
 	public function create()
-	{
+	{		
 		return View::make('dashboard/sucursales/create');
 	}
 	/**
